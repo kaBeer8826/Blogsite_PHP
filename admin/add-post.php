@@ -7,7 +7,7 @@
              </div>
               <div class="col-md-offset-3 col-md-6">
                   <!-- Form -->
-                  <form  action="" method="POST" enctype="multipart/form-data">
+                  <form  action="save-post.php" method="POST" enctype="multipart/form-data">
                       <div class="form-group">
                           <label for="post_title">Title</label>
                           <input type="text" name="post_title" class="form-control" autocomplete="off" required>
@@ -19,7 +19,18 @@
                       <div class="form-group">
                           <label for="exampleInputPassword1">Category</label>
                           <select name="category" class="form-control">
-                              <option value="" selected> Select Category</option>
+                              <option  disabled> Select Category</option>
+                              <?php
+                              include 'config.php';
+                              $sql = "SELECT * FROM category";
+                              $result = mysqli_query($conn, $sql) or die("Query Failed.");
+                              if (mysqli_num_rows($result) > 0) {
+                                  while ($row = mysqli_fetch_assoc($result)) {
+                              ?>
+                                      <option value="<?php echo $row['category_id']; ?>"><?php echo $row['category_name']; ?></option>
+                              <?php }
+                              }
+                              ?>
                           </select>
                       </div>
                       <div class="form-group">
